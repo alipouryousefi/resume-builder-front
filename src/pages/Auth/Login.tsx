@@ -1,39 +1,50 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import Input from "../../components/Inputs";
-import { validateEmail } from "../../utils/helper";
+import Button from "../../components/Button";
+import { UserContext } from "../../context/userContext";
+import { authService } from "../../services/authService";
+import toast from "react-hot-toast";
+import { loginSchema, type LoginFormData } from "../../validations/auth";
 
 interface LoginProps {
   setCurrentPage: (page: string) => void;
 }
 
 const Login = ({ setCurrentPage }: LoginProps) => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState<null | string>(null);
-
   const navigation = useNavigate();
+  const { updateUser } = React.useContext(UserContext);
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const loginMutation = useMutation({
+    mutationFn: authService.login,
+    onSuccess: (data) => {
+      const { token } = data;
+      updateUser(data);
+      localStorage.setItem("accessToken", token);
+      navigation("/dashboard");
+    },
+    onError: (error: any) => {
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    },
+  });
 
-    if (!validateEmail(email)) {
-      setError("Please enter a valid email address");
-      return;
-    }
-
-    if(!password){
-            setError("Please enter a valid email address");
-      return; 
-    }
-
-    setError("")
-
-    try{
-
-    }catch(err){
-      
-    }
+  const onSubmit = (data: LoginFormData) => {
+    loginMutation.mutate(data);
   };
 
   return (
@@ -42,25 +53,33 @@ const Login = ({ setCurrentPage }: LoginProps) => {
       <p className="text-xs text-slate-700 mt-[5px] mb-6">
         Please enter your detail to login
       </p>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          {...register("email")}
           type="text"
           label="Email"
           placeholder="Enter your email"
         />
+        {errors.email && (
+          <p className="text-red-500 text-xs pb-2.5">{errors.email.message}</p>
+        )}
+        
         <Input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          {...register("password")}
           type="password"
           label="Password"
           placeholder="Enter your password"
         />
-        {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
-        <button type="submit" className="btn-primary">
+        {errors.password && (
+          <p className="text-red-500 text-xs pb-2.5">{errors.password.message}</p>
+        )}
+        
+        <Button 
+          type="submit" 
+          isLoading={loginMutation.isPending}
+        >
           LOGIN
-        </button>
+        </Button>
 
         <p className="text-[13px] text-slate-800 mt-3">
           Don't have an account?{" "}

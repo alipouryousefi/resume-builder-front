@@ -16,12 +16,7 @@ const App = () => {
         </Routes>
       </Router>
       <Toaster
-        toastOptions={{
-          className: "",
-          style: {
-            fontSize: "13px",
-          },
-        }}
+   
       />
     </div>
     </UserProvider>

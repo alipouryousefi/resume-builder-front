@@ -1,11 +1,11 @@
-import { API_PATHS } from "./apiPaths";
-import axiosInstance from "./axiosInstance";
+import { API_PATHS } from "../utils/apiPaths";
+import axiosInstance from "../utils/axiosInstance";
 
 
 
 const uploadImage = async (file:File) => {
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("file", file);
     try{
         const response = await axiosInstance.post(API_PATHS.IMAGE.UPLOAD, formData,{
             headers:{

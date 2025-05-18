@@ -1,5 +1,9 @@
 import React, { useRef, useState } from "react";
 import { LuUser, LuUpload, LuTrash } from "react-icons/lu";
+import toast from "react-hot-toast";
+
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 const ProfilePhotoSelector = ({
   image,
@@ -15,28 +19,51 @@ const ProfilePhotoSelector = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
+  const validateImage = (file: File): boolean => {
+    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+      toast.error('Please upload a valid image file (JPEG, PNG, or WebP)');
+      return false;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error('Image size should be less than 2MB');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImage(file);
-
-      const preview = URL.createObjectURL(file);
-      if (setPreview) {
-        setPreview(preview);
+      if (validateImage(file)) {
+        setImage(file);
+        const preview = URL.createObjectURL(file);
+        if (setPreview) {
+          setPreview(preview);
+        }
+        setPreviewUrl(preview);
+      } else {
+        // Reset the input value so the same file can be selected again
+        if (inputRef.current) {
+          inputRef.current.value = '';
+        }
       }
-
-      setPreviewUrl(preview);
     }
   };
 
   const handleRemoveImage = () => {
     setImage(null);
     setPreviewUrl(null);
+    if (setPreview) {
+      setPreview('');
+    }
   };
 
   const onChooseFile = () => {
     inputRef.current?.click();
   };
+
   return (
     <div className="flex justify-center mb-6">
       <input
