@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { resumeService } from '../services/resumeService';
 
-export const useGetResumes = () => {
+export const useGetResumeById = (id: string) => {
   return useQuery({
-    queryKey: ['resumes'],
-    queryFn: resumeService.getAllResumes,
+    queryKey: ['resume', id],
+    queryFn: () => resumeService.getResumeById(id),
   });
 }; 

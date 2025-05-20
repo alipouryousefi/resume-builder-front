@@ -18,12 +18,7 @@ export interface Resume {
     theme?: string;
     colorPalettes?: string[];
   };
-  profileInfo: {
-    profilePreviewUrl?: string;
-    fullName?: string;
-    designation?: string;
-    summary?: string;
-  };
+  profileInfo: ProfileInfo;
   contactInfo: {
     email?: string;
     phone?: string;
@@ -68,3 +63,10 @@ export interface Resume {
   createdAt: Date;
   updatedAt: Date;
 } 
+
+export interface ProfileInfo {
+  profilePreviewUrl?: string;
+  fullName?: string;
+  designation?: string;
+  summary?: string;
+}

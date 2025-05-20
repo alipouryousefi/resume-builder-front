@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useResumes } from "../../hooks/useGetResumes";
+import { useGetResumes } from "../../hooks/useGetResumes";
 import DashboardLayout from "../../components/DashboardLayout";
 import { LuCirclePlus } from "react-icons/lu";
 import { Resume } from "../../types";
@@ -9,7 +9,7 @@ import ResumeSummaryCard from "../../components/ResumeSummaryCard";
 import { CreateResumeForm, Modal } from "../../components";
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { data: resumes, isLoading } = useResumes();
+  const { data: resumes, isLoading } = useGetResumes();
   const [openCreateModal, setOpenCreateModal] = useState(false);  
 
   console.log(resumes);
