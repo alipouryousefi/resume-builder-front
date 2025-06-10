@@ -31,7 +31,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchUser = async () => {
       try {
         const response = await axiosInstance.get(API_PATHS.AUTH.GET_PROFILE);
-        console.log(response.data);
         setUser(response.data.user);
       } catch (error) {
         console.log(error);

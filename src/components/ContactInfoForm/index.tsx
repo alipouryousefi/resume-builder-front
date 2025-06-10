@@ -19,8 +19,8 @@ const ContactInfoForm = ({
           <Input
             label="Address"
             placeholder="Short address"
-            value={contactData.address || ""}
-            onChange={(e) => updateSection("address", e.target.value)}
+            value={contactData.location || ""}
+            onChange={(e) => updateSection("location", e.target.value)}
             type="text"
           />
         </div>

@@ -12,7 +12,6 @@ const Dashboard = () => {
   const { data: resumes, isLoading } = useGetResumes();
   const [openCreateModal, setOpenCreateModal] = useState(false);  
 
-  console.log(resumes);
   return (
     <DashboardLayout>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-7 pt-1 pb-6 px-4 md:px-0">

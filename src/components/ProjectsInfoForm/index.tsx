@@ -48,17 +48,17 @@ const ProjectsInfoForm = ({
               <Input
                 label="Github Link"
                 placeholder="Enter Github Link"
-                value={project.githubLink || ""}
+                value={project.github || ""}
                 onChange={(e) =>
-                  updateArrayItem(index, "githubLink", e.target.value)
+                  updateArrayItem(index, "github", e.target.value)
                 }
               />
               <Input
                 label="Live Demo"
                 placeholder="example: https://example.com"
-                value={project.liveDemoLink || ""}
+                value={project.liveDemo || ""}
                 onChange={(e) =>
-                  updateArrayItem(index, "liveDemoLink", e.target.value)
+                  updateArrayItem(index, "liveDemo", e.target.value)
                 }
               />
             </div>

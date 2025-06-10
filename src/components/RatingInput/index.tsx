@@ -15,8 +15,6 @@ const RatingInput = ({
   bgColor = "#e9d4ef",
 }: RatingInputProps) => {
 
-    console.log("value")
-    console.log(value)
   const displayValue = Math.round((value / 100) * total);
 
   const handleClick = (index: number) => {

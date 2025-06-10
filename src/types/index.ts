@@ -19,47 +19,14 @@ export interface Resume {
     colorPalettes?: string[];
   };
   profileInfo: ProfileInfo;
-  contactInfo: {
-    email?: string;
-    phone?: string;
-    location?: string;
-    linkedin?: string;
-    github?: string;
-    website?: string;
-  };
-  workExperience: Array<{
-    company?: string;
-    role?: string;
-    startDate?: string;
-    endDate?: string;
-    description?: string;
-  }>;
-  education: Array<{
-    degree?: string;
-    institution?: string;
-    startDate?: string;
-    endDate?: string;
-  }>;
-  skills: Array<{
-    name?: string;
-    progress?: number;
-  }>;
-  projects: Array<{
-    title?: string;
-    description?: string;
-    github?: string;
-    liveDemo?: string;
-  }>;
-  certifications: Array<{
-    title?: string;
-    issuer?: string;
-    year?: string;
-  }>;
-  languages: Array<{
-    name?: string;
-    progress?: number;
-  }>;
-  interests?: string[];
+  contactInfo: ContactInfo;
+  workExperience: Array<WorkExperience>;
+  education: Array<Education>;
+  skills: Array<Skill>;
+  projects: Array<Project>;
+  certifications: Array<Certification>;
+  languages: Array<Language>;
+  interests: string[];
   createdAt: Date;
   updatedAt: Date;
 } 
@@ -70,3 +37,51 @@ export interface ProfileInfo {
   designation?: string;
   summary?: string;
 }
+
+export interface Skill {
+  name?: string;
+  progress?: number;
+}
+
+export interface Language {
+  name?: string;
+  progress?: number;
+}
+
+export interface Certification {
+  title?: string;
+  issuer?: string;
+  year?: string;
+}
+
+export interface Project {
+  title?: string;
+  description?: string;
+  github?: string;
+  liveDemo?: string;
+}
+
+export interface Education {
+  degree?: string;
+  institution?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface WorkExperience {
+  company?: string;
+  role?: string;
+  startDate?: string;
+  endDate?: string;
+  description?: string;
+}
+
+export interface ContactInfo {
+  email?: string;
+  phone?: string;
+  location?: string;
+  linkedin?: string;
+  github?: string;
+  website?: string;
+}
+
